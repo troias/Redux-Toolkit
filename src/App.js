@@ -6,10 +6,18 @@ import {
   Redirect,
 } from 'react-router-dom'
 
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
+import AddPostForm from './components/features/posts/addPostsForm'
 
 import { Navbar } from './app/Navbar'
 import PostList from './components/features/posts/postList'
+import SinglePostPage from './components/features/posts/singlePost'
+
+import EditPostForm from './components/features/posts/editPost'
+
+function User(props) {
+  return <h1>Hello!</h1>
+}
 
 function App() {
   // const dispatch = useDispatch()
@@ -27,14 +35,25 @@ function App() {
             exact
             path="/"
             render={() => (
+              <>
+                <PostList />
+              </>
+            )}
+          />
+          <Route
+            path="/add-post"
+            render={() => (
               <section>
-                <h2>Welcome to the Redux Essentials example app!</h2>
+                <AddPostForm />
               </section>
             )}
           />
+          <Route exact path="/posts/:postId" component={SinglePostPage} />
+
+          {/* <Route path="/posts/:postId/edit" component={EditPostForm} />  */}
+          <Route path="/user/:username" component={User} />
           <Redirect to="/" />
         </Switch>
-        <PostList />
       </div>
     </Router>
   )
