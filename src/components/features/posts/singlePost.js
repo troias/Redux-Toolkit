@@ -1,17 +1,16 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import PropTypes from 'prop-types'
+
+import { PostAuthor } from './postAuthor'
+import { TimeAgo } from './timeAgo'
+import { ReactionButtons } from './reactionButton'
+import { selectPostById } from '../../../store/posts/postsReducer'
 
 const SinglePostPage = ({ match }) => {
-  console.log('match', match)
   const { postId } = match.params
 
-  const post = useSelector((state) =>
-    state.posts.posts.find((post) => post.id === +postId)
-  )
-
-  console.log('SinglePostPagePost', post)
+  const post = useSelector((state) => selectPostById(state, postId))
 
   if (!post) {
     return (
@@ -25,22 +24,18 @@ const SinglePostPage = ({ match }) => {
     <section>
       <article className="post">
         <h2>{post.title}</h2>
+        <div>
+          <PostAuthor userId={post.user} />
+          <TimeAgo timestamp={post.date} />
+        </div>
         <p className="post-content">{post.content}</p>
+        <ReactionButtons post={post} />
+        <Link to={`/editPost/${post.id}`} className="button">
+          Edit Post
+        </Link>
       </article>
-      <Link to={`edit/${post.id}`} className="edit-post">
-        Edit
-      </Link>
     </section>
   )
-}
-
-//Note Params comes in a string so we need to parse it to an integer
-SinglePostPage.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      postId: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
 }
 
 export default SinglePostPage

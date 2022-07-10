@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux'
 import AddPostForm from './components/features/posts/addPostsForm'
 
 import { Navbar } from './app/Navbar'
+
 import PostList from './components/features/posts/postList'
 import SinglePostPage from './components/features/posts/singlePost'
 
@@ -50,8 +51,8 @@ function App() {
           />
           <Route exact path="/posts/:postId" component={SinglePostPage} />
 
-          {/* <Route path="/posts/:postId/edit" component={EditPostForm} />  */}
-          <Route path="/user/:username" component={User} />
+          <Route exact path="/posts/:postId/edit" component={EditPostForm} />
+
           <Redirect to="/" />
         </Switch>
       </div>

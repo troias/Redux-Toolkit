@@ -1,16 +1,13 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { postActions } from '../../../store/posts/postsReducer'
+
+import { postUpdated, selectPostById } from '../../../store/posts/postsReducer'
 
 const EditPostForm = ({ match }) => {
   const { postId } = match.params
 
-  const post = useSelector((state) =>
-    state.posts.find((post) => post.id === postId)
-  )
-
-  console.log('editFormPost', post)
+  const post = useSelector((state) => selectPostById(state, postId))
 
   const [title, setTitle] = useState(post.title)
   const [content, setContent] = useState(post.content)
@@ -23,7 +20,7 @@ const EditPostForm = ({ match }) => {
 
   const onSavePostClicked = () => {
     if (title && content) {
-      dispatch(postActions.editPost({ id: postId, title, content }))
+      dispatch(postUpdated({ id: postId, title, content }))
       history.push(`/posts/${postId}`)
     }
   }
