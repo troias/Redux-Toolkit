@@ -15,6 +15,9 @@ import PostList from './components/features/posts/postList'
 import SinglePostPage from './components/features/posts/singlePost'
 
 import EditPostForm from './components/features/posts/editPost'
+import UsersList from './components/features/users/usersList'
+import UserPage from './components/features/users/usersPage'
+import NotificationsList from './components/features/notifications/notificationsList'
 
 function User(props) {
   return <h1>Hello!</h1>
@@ -32,6 +35,7 @@ function App() {
       <Navbar />
       <div className="App">
         <Switch>
+          <Route exact path="/notifications" component={NotificationsList} />
           <Route
             exact
             path="/"
@@ -52,6 +56,8 @@ function App() {
           <Route exact path="/posts/:postId" component={SinglePostPage} />
 
           <Route exact path="/posts/:postId/edit" component={EditPostForm} />
+          <Route exact path="/users" component={UsersList} />
+          <Route exact path="/users/:userId" component={UserPage} />
 
           <Redirect to="/" />
         </Switch>
